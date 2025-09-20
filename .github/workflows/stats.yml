@@ -1,0 +1,35 @@
+name: Update Stats Page
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # run daily
+  workflow_dispatch:       # allow manual run
+  push:
+    paths:
+      - "data/stats.csv"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate stats page
+        run: python scripts/generate_stats.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add docs/index.html
+          git commit -m "Update stats dashboard"
+          git push
