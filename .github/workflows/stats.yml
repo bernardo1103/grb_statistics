@@ -1,12 +1,12 @@
-name: Update Stats Page
+name: Update Dashboard
 
 on:
   schedule:
     - cron: "0 0 * * *"  # run daily
-  workflow_dispatch:       # allow manual run
+  workflow_dispatch:       # manual trigger
   push:
     paths:
-      - "data/stats.csv"
+      - "data/events.csv"
 
 jobs:
   build:
@@ -23,13 +23,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generate stats page
-        run: python scripts/generate_stats.py
+      - name: Generate dashboard
+        run: python scripts/generate_dashboard.py
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add docs/index.html
-          git commit -m "Update stats dashboard"
+          git commit -m "Update dashboard [skip ci]" || echo "No changes to commit"
           git push
