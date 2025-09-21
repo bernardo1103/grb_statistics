@@ -32,4 +32,5 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add docs/index.html
           git commit -m "Update dashboard [skip ci]" || echo "No changes to commit"
-          git push https://x-access-token:${PAT_TOKEN}@github.com/bernardo1103/grb_statistics.git HEAD:main
+          git push "https://x-access-token:${PAT_TOKEN}@github.com/bernardo1103/grb_statistics.git" HEAD:main
+
